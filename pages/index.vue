@@ -2,6 +2,9 @@
   <div class="loading" v-if="isLoading">
     <a-spin size="large" />
   </div>
+  <div class="top" @click="toTop">
+    <UpCircleOutlined style="font-size: 20px;color: rgb(111, 111, 111);" />
+  </div>
   <div class="continer">
     <AppSidebar />
     <div class="continer-content">
@@ -128,6 +131,13 @@ const arr = reactive([
   }
 ])
 
+const toTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  })
+}
+
 onMounted(() => {
   setTimeout(() => {
     isLoading.value = false
@@ -177,6 +187,20 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   z-index: 99;
+}
+
+.top {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(165, 162, 162, 0.4);
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 </style>
   

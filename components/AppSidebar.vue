@@ -39,9 +39,12 @@ const items: ItemType[] = reactive([
 ]);
 
 const handleClick: MenuProps['onClick'] = e => {
-    console.log('click', e);
     const link = e.item.originItemValue?.label;
-    router.push(`/#${link}`)
+    const jump = document.querySelector(`#${link}`) as HTMLElement
+    jump.scrollIntoView({
+        block: 'start',
+        behavior: 'smooth'
+    })
 };
 
 watch(openKeys, val => {
