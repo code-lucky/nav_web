@@ -2,7 +2,6 @@
   <div class="loading" v-if="isLoading">
     <a-spin size="large" />
   </div>
-
   <div class="continer">
     <AppSidebar />
     <div class="continer-content">
@@ -113,6 +112,14 @@ const arr = reactive([
   },
   {
     label: 'AI对话聊天',
+    items: [{
+      icon: '',
+      name: 'Stable Diffusion',
+      desc: 'StabilityAI推出的文本到图像生成AI'
+    }]
+  },
+  {
+    label: 'AI对话聊天1',
     items: [{
       icon: '',
       name: 'Stable Diffusion',

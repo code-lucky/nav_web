@@ -1,6 +1,6 @@
 <!-- 导航标签列表和标题 -->
 <template>
-    <div class="content-title">{{ label }}</div>
+    <div class="content-title" :id="label">{{ label }}</div>
     <div class="content-items">
         <a-tooltip placement="bottom" v-for="(item, idx) in items" :key="idx">
             <template #title>

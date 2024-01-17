@@ -2,14 +2,15 @@
     <div style="height: 20px;"></div>
     <div class="sidebar">
         <div style="height: 20px;"></div>
-        <a-menu id="dddddd" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" mode="inline"
+        <a-menu selectable="false" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" mode="inline"
             :items="items" @click="handleClick"></a-menu>
     </div>
 </template>
 <script lang="ts" setup>
 import { reactive, ref, watch, VueElement, h, onMounted } from 'vue';
 import type { MenuProps, ItemType } from 'ant-design-vue';
-
+import { useRouter } from 'vue-router';
+const router = useRouter()
 const selectedKeys = ref<string[]>(['1']);
 const openKeys = ref<string[]>(['sub1']);
 
@@ -34,11 +35,13 @@ const items: ItemType[] = reactive([
     getItem('AI图像工具', '2', () => h('')),
     getItem('AI视频工具', '3', () => h('')),
     getItem('AI办公工具', '4', () => h('')),
-    getItem('AI对话聊天', '5', () => h(''))
+    getItem('AI对话聊天1', '5', () => h(''))
 ]);
 
 const handleClick: MenuProps['onClick'] = e => {
     console.log('click', e);
+    const link = e.item.originItemValue?.label;
+    router.push(`/#${link}`)
 };
 
 watch(openKeys, val => {
