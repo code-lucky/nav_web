@@ -62,6 +62,8 @@ onMounted(() => {
     background-color: #fff;
     margin: 20px;
     border-radius: 10px;
+    position: sticky;
+    top: 5px;
 }
 </style>
     

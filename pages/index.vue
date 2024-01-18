@@ -1,8 +1,6 @@
 <template>
-  <div class="loading" v-if="isLoading">
-    <a-spin size="large" />
-  </div>
-  <div class="top" @click="toTop">
+  <AppLoading v-if="isLoading"/>
+  <div class="top" @click="toTop" v-if="isToTop">
     <UpCircleOutlined style="font-size: 20px;color: rgb(111, 111, 111);" />
   </div>
   <div class="continer">
@@ -18,8 +16,8 @@
 </template>
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue';
+const isToTop = ref(false)
 const isLoading = ref(true)
-
 const arr = reactive([
   {
     label: 'AI写作工具',
@@ -142,6 +140,15 @@ onMounted(() => {
   setTimeout(() => {
     isLoading.value = false
   }, 500)
+  window.onscroll = function (event) {
+    // 处理鼠标滚动事件的代码
+    if(document.documentElement.scrollTop > 100){
+      isToTop.value = true
+    }else{
+      isToTop.value = false
+    }
+    
+  }
 })
 </script>
 <style scoped>
@@ -175,18 +182,6 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-}
-
-.loading {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  background-color: rgba(250, 250, 250, 1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 99;
 }
 
 .top {
