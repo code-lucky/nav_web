@@ -1,5 +1,5 @@
 <template>
-  <AppLoading v-if="isLoading"/>
+  <AppLoading v-if="isLoading" />
   <div class="top" @click="toTop" v-if="isToTop">
     <UpCircleOutlined style="font-size: 20px;color: rgb(111, 111, 111);" />
   </div>
@@ -142,13 +142,13 @@ onMounted(() => {
   }, 500)
   window.onscroll = function (event) {
     // 处理鼠标滚动事件的代码
-    if(document.documentElement.scrollTop > 100){
+    if (document.documentElement.scrollTop > 100) {
       isToTop.value = true
-    }else{
+    } else {
       isToTop.value = false
     }
-    
   }
+
 })
 </script>
 <style scoped>

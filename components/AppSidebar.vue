@@ -3,14 +3,13 @@
     <div class="sidebar">
         <div style="height: 20px;"></div>
         <a-menu selectable="false" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" mode="inline"
-            :items="items" @click="handleClick"></a-menu>
+            :items="menuList" @click="handleClick"></a-menu>
     </div>
 </template>
 <script lang="ts" setup>
-import { reactive, ref, watch, VueElement, h, onMounted } from 'vue';
+import { reactive, ref, watch, VueElement, h, onMounted, nextTick } from 'vue';
 import type { MenuProps, ItemType } from 'ant-design-vue';
-import { useRouter } from 'vue-router';
-const router = useRouter()
+import { categoryList } from '../apis/category';
 const selectedKeys = ref<string[]>(['1']);
 const openKeys = ref<string[]>(['sub1']);
 
@@ -30,13 +29,7 @@ function getItem(
     } as ItemType;
 }
 
-const items: ItemType[] = reactive([
-    getItem('AI写作工具', '1', () => h('')),
-    getItem('AI图像工具', '2', () => h('')),
-    getItem('AI视频工具', '3', () => h('')),
-    getItem('AI办公工具', '4', () => h('')),
-    getItem('AI对话聊天1', '5', () => h(''))
-]);
+const menuList: ItemType[] = reactive([])
 
 const handleClick: MenuProps['onClick'] = e => {
     const link = e.item.originItemValue?.label;
@@ -51,8 +44,16 @@ watch(openKeys, val => {
     console.log('openKeys', val);
 })
 
+const init = async () => {
+    const result = await categoryList();
+    result.data.forEach((elm) => {
+        menuList.push(getItem(elm.name, elm.id, () => h('')),)
+    })
+}
 onMounted(() => {
-
+    nextTick(async () => {
+        await init()
+    })
 })
 </script>
 <style scoped>
