@@ -7,7 +7,13 @@
                 <span>{{ item.desc }}</span>
             </template>
             <a-card hoverable class="content-item">
-                {{ item }}
+                <div class="content-card" @click="toGo(item.link)">
+                    <img class="content-item-img" :src="'http://127.0.0.1:3002/uploads/' + item.icon" />
+                    <div class="content-item-info">
+                        <div class="content-item-info-title">{{ item.label }}</div>
+                        <div class="content-item-info-desc">{{ item.desc }}</div>
+                    </div>
+                </div>
             </a-card>
         </a-tooltip>
     </div>
@@ -23,6 +29,10 @@ const props = defineProps({
         default: ''
     }
 })
+
+const toGo = (link: string) =>{
+    window.open(link,'_blank')
+}
 </script>
 <style scoped>
 .continer-content {
@@ -43,9 +53,31 @@ const props = defineProps({
     border-radius: 10px;
     background-color: #fff;
     margin: 10px 20px 10px 0px;
+    cursor: pointer;
+}
+
+.content-card{
     display: flex;
     align-items: center;
+}
+
+.content-item-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+}
+
+.content-item-info {
+    display: flex;
     justify-content: center;
-    cursor: pointer;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.content-item-info-desc{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 180px;
 }
 </style>

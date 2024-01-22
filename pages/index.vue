@@ -8,132 +8,30 @@
     <div class="continer-content">
       <!-- 内容 -->
       <div class="content">
-        <ContentItem v-for="(item, idx) in arr" :label="item.label" :items="item.items" :key="idx" />
+        <ContentItem v-for="(item, idx) in arr" :label="item.title" :items="item.data" :key="idx" />
       </div>
       <AppFooter />
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue';
+<script setup lang="ts">[[]]
+import { nextTick, onMounted, reactive, ref } from 'vue';
+import { getNavArray } from '../apis/category';
 const isToTop = ref(false)
 const isLoading = ref(true)
-const arr = reactive([
-  {
-    label: 'AI写作工具',
-    items: [{
-      icon: '',
-      name: 'ChatGPT',
-      desc: 'OpenAI旗下AI对话工具'
-    },
-    {
-      icon: '',
-      name: 'ChatGPT',
-      desc: 'OpenAI旗下AI对话工具'
-    },
-    {
-      icon: '',
-      name: 'ChatGPT',
-      desc: 'OpenAI旗下AI对话工具'
-    },
-    {
-      icon: '',
-      name: 'ChatGPT',
-      desc: 'OpenAI旗下AI对话工具'
-    },
-    {
-      icon: '',
-      name: 'ChatGPT',
-      desc: 'OpenAI旗下AI对话工具'
-    }]
-  },
-  {
-    label: 'AI图像工具',
-    items: [{
-      icon: '',
-      name: 'Stable Diffusion',
-      desc: 'StabilityAI推出的文本到图像生成AI'
-    },
-    {
-      icon: '',
-      name: 'Stable Diffusion',
-      desc: 'StabilityAI推出的文本到图像生成AI'
-    },
-    {
-      icon: '',
-      name: 'Stable Diffusion',
-      desc: 'StabilityAI推出的文本到图像生成AI'
-    },
-    {
-      icon: '',
-      name: 'Stable Diffusion',
-      desc: 'StabilityAI推出的文本到图像生成AI'
-    },
-    {
-      icon: '',
-      name: 'Stable Diffusion',
-      desc: 'StabilityAI推出的文本到图像生成AI'
-    },
-    {
-      icon: '',
-      name: 'Stable Diffusion',
-      desc: 'StabilityAI推出的文本到图像生成AI'
-    }]
-  },
-  {
-    label: 'AI视频',
-    items: [{
-      icon: '',
-      name: 'Stable Diffusion',
-      desc: 'StabilityAI推出的文本到图像生成AI'
-    },
-    {
-      icon: '',
-      name: 'Stable Diffusion',
-      desc: 'StabilityAI推出的文本到图像生成AI'
-    },
-    {
-      icon: '',
-      name: 'Stable Diffusion',
-      desc: 'StabilityAI推出的文本到图像生成AI'
-    },
-    {
-      icon: '',
-      name: 'Stable Diffusion',
-      desc: 'StabilityAI推出的文本到图像生成AI'
-    }]
-  },
-  {
-    label: 'AI办公',
-    items: [{
-      icon: '',
-      name: 'Stable Diffusion',
-      desc: 'StabilityAI推出的文本到图像生成AI'
-    }]
-  },
-  {
-    label: 'AI对话聊天',
-    items: [{
-      icon: '',
-      name: 'Stable Diffusion',
-      desc: 'StabilityAI推出的文本到图像生成AI'
-    }]
-  },
-  {
-    label: 'AI对话聊天1',
-    items: [{
-      icon: '',
-      name: 'Stable Diffusion',
-      desc: 'StabilityAI推出的文本到图像生成AI'
-    }]
-  }
-])
+const arr = ref([])
 
 const toTop = () => {
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   })
+}
+
+const init = async() =>{
+  const data = await getNavArray()
+
+  arr.value = data.data
 }
 
 onMounted(() => {
@@ -148,7 +46,9 @@ onMounted(() => {
       isToTop.value = false
     }
   }
-
+  nextTick(async ()=>{
+    await init()
+  })
 })
 </script>
 <style scoped>
